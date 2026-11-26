@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AP AI 오피스 · 현율님 전용 멀티 AI 협업 데스크</title>
+<meta name="description" content="대장 김현율 · 총괄 팀장 피클(노예)이 클로드·챗GPT·제미나이·Cue·Muse와 우편함(회의실)에서 일을 나누고 결과를 모으는 AP파트너 전용 AI 오피스.">
+<meta name="theme-color" content="#ff6fa5">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="AP AI 오피스">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="bg-glow" aria-hidden="true"></div>
+
+<header class="app-header">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true">🏢</span>
+    <div class="brand-text">
+      <h1>AP AI 오피스</h1>
+      <p>대장 김현율 · 총괄 팀장 피클(노예)</p>
+    </div>
+  </div>
+  <div class="header-actions">
+    <button id="connChip" class="conn-chip is-demo" type="button" title="연결 상태 · 눌러서 설정 열기">
+      <span class="conn-dot" aria-hidden="true"></span><span id="connText">데모 모드</span>
+    </button>
+    <button id="btnPlaybook" class="ghost-btn" type="button">📚 <span>교육서</span></button>
+    <button id="btnSettings" class="ghost-btn" type="button" aria-label="설정">⚙️ <span>설정</span></button>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="오피스 메뉴">
+  <button class="tab is-active" id="tabBtn-office" data-tab="office" role="tab" aria-selected="true" aria-controls="tab-office">
+    <span class="tab-ico" aria-hidden="true">🏢</span> 오피스
+  </button>
+  <button class="tab" id="tabBtn-room" data-tab="room" role="tab" aria-selected="false" aria-controls="tab-room">
+    <span class="tab-ico" aria-hidden="true">💬</span> 회의실<span class="tab-sub">(우편함)</span>
+  </button>
+  <button class="tab" id="tabBtn-board" data-tab="board" role="tab" aria-selected="false" aria-controls="tab-board">
+    <span class="tab-ico" aria-hidden="true">📋</span> 업무판
+  </button>
+</nav>
+
+<main class="app-main">
+
+  <!-- ================= 오피스 ================= -->
+  <section id="tab-office" class="tab-panel is-active" role="tabpanel" aria-labelledby="tabBtn-office">
+    <div class="hero-card">
+      <img src="assets/office-hero.jpg" alt="핑크빛 파스텔 오피스 전경" class="hero-img" width="1600" height="711">
+      <div class="hero-overlay" aria-hidden="true">
+        <span class="hero-bubble b1">피클 안녕, 방구야 …</span>
+        <span class="hero-bubble b2">대장 지시로 분업 확인 중…</span>
+        <span class="hero-bubble b3">네, 현율 대장님!</span>
+      </div>
+      <div class="hero-caption">
+        <strong>오늘의 오피스</strong>
+        <span id="heroSummary">팀원 상태를 불러오는 중…</span>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <h2>우리 팀</h2>
+      <div class="head-actions">
+        <button class="pill-btn" type="button" data-go="room" data-room="hq">🗣 대회의실</button>
+        <button class="pill-btn" type="button" data-go="board">📋 업무판</button>
+      </div>
+    </div>
+
+    <div id="agentGrid" class="agent-grid"><!-- JS --></div>
+  </section>
+
+  <!-- ================= 회의실(우편함) ================= -->
+  <section id="tab-room" class="tab-panel" role="tabpanel" aria-labelledby="tabBtn-room">
+    <div class="room-bar">
+      <div id="roomPills" class="room-pills" role="tablist" aria-label="회의실 선택"></div>
+      <button id="btnAddRoom" class="mini-btn" type="button">＋ 방 추가</button>
+    </div>
+
+    <div class="room-card">
+      <div class="room-head">
+        <div class="room-title">
+          <h2 id="roomName">AP파트너 본부</h2>
+          <p id="roomMeta" class="muted">참가자 6명 · 새 메시지 0건</p>
+        </div>
+        <div class="room-tools">
+          <button id="btnConnect" class="pill-btn strong" type="button">🔗 참가자 연결</button>
+          <button id="btnPaste" class="pill-btn" type="button">📥 답 옮기기</button>
+          <button id="btnRefresh" class="pill-btn icon-only" type="button" title="새로 고침" aria-label="새로 고침">↻</button>
+        </div>
+      </div>
+
+      <div id="messageList" class="message-list" aria-live="polite"><!-- JS --></div>
+
+      <div class="composer">
+        <div class="mention-row" aria-label="호명 칩">
+          <button class="mention-chip" type="button" data-mention="@피클">@피클</button>
+          <button class="mention-chip" type="button" data-mention="@클로드">@클로드</button>
+          <button class="mention-chip" type="button" data-mention="@챗GPT">@챗GPT</button>
+          <button class="mention-chip" type="button" data-mention="@제미나이">@제미나이</button>
+          <button class="mention-chip all" type="button" data-mention="@다들">@다들</button>
+        </div>
+        <div class="composer-row">
+          <textarea id="messageInput" rows="2" placeholder="대장으로서 지시를 남겨 보세요. @피클 로 호명하면 피클만 답합니다." aria-label="메시지 입력"></textarea>
+          <button id="btnSend" class="send-btn" type="button">보내기 <span aria-hidden="true">💌</span></button>
+        </div>
+        <p class="composer-hint">Enter 전송 · Shift+Enter 줄바꿈 · <span id="composerMode">데모 모드(브라우저 저장)</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 업무판 ================= -->
+  <section id="tab-board" class="tab-panel" role="tabpanel" aria-labelledby="tabBtn-board">
+    <div class="board-top">
+      <div>
+        <h2>업무판</h2>
+        <p class="muted">티켓 1장 = AI 1명에게 딱 한 번. 상태를 옮겨 검수 흐름을 관리합니다.</p>
+      </div>
+      <button id="btnNewTicket" class="pill-btn strong" type="button">＋ 새 티켓</button>
+    </div>
+
+    <form id="ticketForm" class="ticket-form" hidden>
+      <div class="form-grid">
+        <label class="field">
+          <span>제목</span>
+          <input id="ticketTitle" type="text" maxlength="120" placeholder="예: AP-012 블로그 1편 초안" required>
+        </label>
+        <label class="field">
+          <span>담당 AI</span>
+          <select id="ticketAssignee"></select>
+        </label>
+        <label class="field">
+          <span>우선순위</span>
+          <select id="ticketPriority">
+            <option value="높음">높음</option>
+            <option value="보통" selected>보통</option>
+            <option value="낮음">낮음</option>
+          </select>
+        </label>
+        <label class="field span-2">
+          <span>상세 내용</span>
+          <textarea id="ticketDetail" rows="3" placeholder="물건 고유번호, 금지어 규칙, 마감, 참고 링크 등"></textarea>
+        </label>
+      </div>
+      <div class="form-actions">
+        <button type="button" id="btnCancelTicket" class="mini-btn">취소</button>
+        <button type="submit" class="send-btn">티켓 등록</button>
+      </div>
+    </form>
+
+    <div id="boardColumns" class="board-columns"><!-- JS --></div>
+  </section>
+</main>
+
+<footer class="app-footer">
+  <span>AP AI 오피스 · 현율님 전용</span>
+  <span class="dot">·</span>
+  <a href="docs/ai-delegation-playbook.md" target="_blank" rel="noopener">AP파트너 교육 매뉴얼</a>
+  <span class="dot">·</span>
+  <span id="footerMode">데모 모드</span>
+</footer>
+
+<!-- ============ 설정 모달 ============ -->
+<div class="modal" id="modalSettings" hidden>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <button class="modal-x" type="button" data-close>✕</button>
+    <h2 id="settingsTitle">⚙️ 연결 설정</h2>
+    <p class="muted small">Apps Script 웹앱 주소와 키를 넣으면 실제 우편함으로 동작합니다. 값은 이 브라우저(localStorage)에만 저장되고 GitHub 공개 코드에는 들어가지 않습니다.</p>
+    <label class="field">
+      <span>Apps Script 웹앱 주소 (…/exec)</span>
+      <input id="inputEndpoint" type="url" placeholder="https://script.google.com/macros/s/AKfycb…/exec" autocomplete="off" spellcheck="false">
+    </label>
+    <label class="field">
+      <span>AGENT_KEY (팀원용 키)</span>
+      <input id="inputAgentKey" type="text" placeholder="Apps Script에서 자동 생성된 AGENT_KEY" autocomplete="off" spellcheck="false">
+    </label>
+    <label class="field">
+      <span>ADMIN_KEY (관리자 키 · 선택)</span>
+      <input id="inputAdminKey" type="password" placeholder="관리자 기능을 쓸 때만" autocomplete="off" spellcheck="false">
+    </label>
+    <div class="settings-note">
+      <p>· 주소만 넣고 <b>연결 테스트</b>를 누르면 <code>?action=ping</code>으로 상태를 확인합니다.</p>
+      <p>· 링크로 바로 열 때는 <code>#k=AGENT_KEY&amp;api=https://…/exec</code> 형태도 됩니다.</p>
+      <p>· 배포 방법은 저장소의 <code>apps-script/README.md</code>를 보세요.</p>
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="mini-btn" id="btnClearSettings">초기화</button>
+      <button type="button" class="mini-btn" id="btnTestConn">연결 테스트</button>
+      <button type="button" class="send-btn" id="btnSaveSettings">저장</button>
+    </div>
+    <p id="connResult" class="conn-result" hidden></p>
+  </div>
+</div>
+
+<!-- ============ 교육서 모달 ============ -->
+<div class="modal" id="modalPlaybook" hidden>
+  <div class="modal-card wide" role="dialog" aria-modal="true" aria-labelledby="playbookTitle">
+    <button class="modal-x" type="button" data-close>✕</button>
+    <h2 id="playbookTitle">📚 AP파트너 전담 AI 협업·교육 매뉴얼 <span class="badge-soft">v1.0</span></h2>
+    <p class="muted small">클로드·챗GPT·제미나이 등에 일을 맡길 때 <b>반드시 함께 전달하는 규칙서</b>입니다. 아래 버튼으로 통째로 복사해 각 AI 앱에 붙여 넣으세요.</p>
+    <div class="playbook-body" id="playbookBody"><!-- JS --></div>
+    <div class="modal-actions">
+      <a class="mini-btn" href="docs/ai-delegation-playbook.md" target="_blank" rel="noopener">원문 파일</a>
+      <button type="button" class="send-btn" id="btnCopyPlaybook">📋 교육서 전체 복사</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 참가자 연결 모달 ============ -->
+<div class="modal" id="modalConnect" hidden>
+  <div class="modal-card wide" role="dialog" aria-modal="true" aria-labelledby="connectTitle">
+    <button class="modal-x" type="button" data-close>✕</button>
+    <h2 id="connectTitle">🔗 참가자 연결 · 1회용 연결 문구</h2>
+    <p class="muted small">AI 앱(클로드·챗GPT·제미나이 등) 채팅창에 아래 문구를 <b>한 번만 붙여 넣으면</b> 그 방의 규칙과 교육서까지 같이 읽고 답장하는 팀원이 됩니다.</p>
+    <div id="connectList" class="connect-list"><!-- JS --></div>
+  </div>
+</div>
+
+<!-- ============ 답 옮기기 모달 ============ -->
+<div class="modal" id="modalPaste" hidden>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="pasteTitle">
+    <button class="modal-x" type="button" data-close>✕</button>
+    <h2 id="pasteTitle">📥 답 옮기기 (수동 붙여넣기)</h2>
+    <p class="muted small">직접 접속이 막힌 앱(웹 검색 전용 등)의 답변을 그대로 붙여 넣어 방에 등록합니다.</p>
+    <label class="field">
+      <span>보낸 AI</span>
+      <select id="pasteAuthor"></select>
+    </label>
+    <label class="field">
+      <span>답변 내용</span>
+      <textarea id="pasteText" rows="7" placeholder="AI가 준 답변을 그대로 붙여 넣으세요."></textarea>
+    </label>
+    <div class="modal-actions">
+      <button type="button" class="mini-btn" data-close>취소</button>
+      <button type="button" class="send-btn" id="btnPasteSubmit">방에 등록</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="playbook.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
