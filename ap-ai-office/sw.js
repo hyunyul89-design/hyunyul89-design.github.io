@@ -1,5 +1,5 @@
 /* AP AI 오피스 · service worker (PWA) */
-const CACHE = 'apao-v1';
+const CACHE = 'apao-v2';
 const CORE = [
   './',
   './index.html',

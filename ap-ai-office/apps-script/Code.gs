@@ -149,7 +149,6 @@ function handlePing_() {
     app: 'AP AI 오피스',
     version: APP_VERSION,
     mode: 'live',
-    spreadsheetId: ctx.ss.getId(),
     rooms: rooms.length,
     messages: countRows_(ctx.ss, 'Messages'),
     tasks: countRows_(ctx.ss, 'Tasks'),

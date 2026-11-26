@@ -133,11 +133,11 @@
           { id: 'm-hq-1', author: '노예 · 피클', agentId: 'pickle', role: 'ai', ts: m(96),
             text: '대장님, 오늘 티켓 3건 접수했어요.\n① 블로그 2편 초안 → @클로드\n② 릴스 훅 5개 → @챗GPT\n③ 상권·계약 체크리스트 → @제미나이\n각자 맡은 것만 우편함에 넣어 주세요. 새 지시 없으면 "대기"로 끝냅니다.' },
           { id: 'm-hq-2', author: '김현율', agentId: 'hyunyul', role: 'me', ts: m(74),
-            text: '이번 주는 AP-012 하나로만 간다. 금지어 1건이라도 있으면 바로 반려할게. 숫자는 물건표 원본만.' },
+            text: '이번 주는 샘플 물건 하나로만 간다. 금지어 1건이라도 있으면 바로 반려할게. 숫자는 물건표 원본만.' },
           { id: 'm-hq-3', author: '클로드', agentId: 'claude', role: 'ai', ts: m(51),
             text: '@피클 블로그 2편 각도 분리해서 초안 잡았습니다. (수익·운영 / 상권·계약)\n금지어 0건, 8종 전부 치환 확인했고 숫자는 물건표 원본만 썼어요.' },
           { id: 'm-hq-4', author: '챗GPT', agentId: 'chatgpt', role: 'ai', ts: m(22),
-            text: '릴스 훅 5개 뽑았습니다. 첫 훅은 "시설·영업권 1,850만" 숫자로 시작하고 점포 예치금은 별도로 작게 표기했어요.' }
+            text: '릴스 훅 5개 뽑았습니다. 첫 훅은 시설·영업권 금액 숫자로 시작하고, 점포 예치금은 별도로 작게 표기했어요.' }
         ],
         blog: [
           { id: 'm-bl-1', author: '노예 · 피클', agentId: 'pickle', role: 'ai', ts: m(180),
@@ -152,7 +152,7 @@
       },
       agentStatus: { pickle: 'working', claude: 'done', chatgpt: 'idle', gemini: 'idle', cue: 'offline', muse: 'offline' },
       tickets: [
-        { id: 't-1', title: 'AP-012 블로그 2편 초안 (에이피파트너 · 창업의 법칙)', assignee: 'claude', priority: '높음', status: '검수 필요', detail: '각도 완전 분리 / 금지어 0건 / 하단 유입 링크 1곳', createdAt: m(210), updatedAt: m(48) },
+        { id: 't-1', title: '샘플 물건 블로그 2편 초안 (에이피파트너 · 창업의 법칙)', assignee: 'claude', priority: '높음', status: '검수 필요', detail: '각도 완전 분리 / 금지어 0건 / 하단 유입 링크 1곳', createdAt: m(210), updatedAt: m(48) },
         { id: 't-2', title: '릴스 훅 5개 + 스레드 반말 카피', assignee: 'chatgpt', priority: '보통', status: '진행 중', detail: '숫자는 1원도 틀리지 않게. 첫 훅에 시설·영업권 금액.', createdAt: m(190), updatedAt: m(20) },
         { id: 't-3', title: '상권 · 계약 리스크 체크리스트', assignee: 'gemini', priority: '보통', status: '대기', detail: '물건표 원본 숫자만. 근처 역·매출 사유 지어내기 금지.', createdAt: m(150), updatedAt: m(150) },
         { id: 't-4', title: '우편함 참가자 연결 문구 배포', assignee: 'pickle', priority: '높음', status: '완료', detail: '클로드·챗GPT·제미나이에 1회용 연결 문구 전달 완료', createdAt: m(320), updatedAt: m(90) }
